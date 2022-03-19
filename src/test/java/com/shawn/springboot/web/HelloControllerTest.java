@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = HelloController.class)
+@WebMvcTest(controllers = HelloController.class)    //@WebMvcTest는 JPA 기능이 작동하지 않는다.
 public class HelloControllerTest{
 
     @Autowired
