@@ -37,7 +37,7 @@ public class PostsApiControllerTest {
     }
 
     @Test
-    public void Posts_등록된다(){
+    public void Posts_등록된다() throws Exception{
         //given
         String title = "title_for_test";
         String content = "content_for_test";
@@ -56,10 +56,23 @@ public class PostsApiControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
+
+
+
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
 
+    }
+
+    @Test
+    public void Posts_수정된다() throws Exception{
+        //given
+        Posts savedPosts = postsRepository.save(Posts.builder()
+                                            .title("title__2")
+                                            .content("content__2")
+                                            .author("author__2")
+                                            .build());
     }
 
 }
