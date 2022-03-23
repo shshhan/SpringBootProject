@@ -2,13 +2,16 @@ package com.shawn.springboot.service.posts;
 
 import com.shawn.springboot.domain.posts.Posts;
 import com.shawn.springboot.domain.posts.PostsRepository;
+import com.shawn.springboot.web.dto.PostsListResponseDto;
 import com.shawn.springboot.web.dto.PostsResponseDto;
 import com.shawn.springboot.web.dto.PostsSaveRequestDto;
 import com.shawn.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -41,7 +44,18 @@ public class PostsService {
                                         .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
         return new PostsResponseDto(entity);
+    }
 
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream().map(PostsListResponseDto::new).collect(Collectors.toList());
+        //map(PostsListResponseDto::new) == map(posts -> new PostsListResponseDto(posts))
+    }
+
+    @Transactional
+    public void delete(Long id){
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        postsRepository.delete(posts);  //delete()는 엔티티를 파라미터로 삭제할 수 있고, deleteBuId()를 사용하면 id로 삭제할 수도 있다.  /여기서는 존재하는 Posts인지 확인을 위해 엔티티 조회 후 그대로 삭제
 
     }
 }
