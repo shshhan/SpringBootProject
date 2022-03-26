@@ -1,5 +1,6 @@
 package com.shawn.springboot.web;
 
+import com.shawn.springboot.config.auth.dto.SessionUser;
 import com.shawn.springboot.service.posts.PostsService;
 import com.shawn.springboot.web.dto.PostsResponseDto;
 import lombok.Getter;
@@ -10,11 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
     /**
      * mustach starter 덕분에 컨트롤러에서 문자열을 반환할 때 앞의 경로와 뒤의 파일 확장자는 자동으로 지정된다.
      * 앞의 경로 : src/main/resources/templates
@@ -25,6 +29,11 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model){   //model : 서버 템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있다.
         model.addAttribute("posts", postsService.findAllDesc());
+
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        if(user != null){
+            model.addAttribute("userName", user.getName());
+        }
         return "index";
     }
 
