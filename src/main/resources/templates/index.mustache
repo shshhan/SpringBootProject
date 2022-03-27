@@ -11,6 +11,9 @@
             {{/userName}}
             {{^userName}}
                 <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                <a href="/oauth2/authorization/naver" class="btn btn-success active" role="button">Naver Login</a>
+                    <!-- 네이버 로그인 url은 application-oauth.properties에 등록한 redirect-uri값에 맞춰 자동으로 등록된다. -->
+                    <!-- /oauth2/authorization/까지는 고정이고 마지막 Path만 각 소셜 로그인 코드를 사용하면 된다. -->
             {{/userName}}
         </div>
     </div>

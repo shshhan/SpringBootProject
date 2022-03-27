@@ -1,5 +1,6 @@
 package com.shawn.springboot.web;
 
+import com.shawn.springboot.config.auth.LoginUser;
 import com.shawn.springboot.config.auth.dto.SessionUser;
 import com.shawn.springboot.service.posts.PostsService;
 import com.shawn.springboot.web.dto.PostsResponseDto;
@@ -27,10 +28,9 @@ public class IndexController {
      * @return
      */
     @GetMapping("/")
-    public String index(Model model){   //model : 서버 템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있다.
+    public String index(Model model, @LoginUser SessionUser user){   //model : 서버 템플릿 엔진에서 사용할 수 있는 객체를 저장할 수 있다.
         model.addAttribute("posts", postsService.findAllDesc());
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user != null){
             model.addAttribute("userName", user.getName());
         }
