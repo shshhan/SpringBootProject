@@ -5,17 +5,17 @@ import com.shawn.springboot.domain.posts.Posts;
 import com.shawn.springboot.domain.posts.PostsRepository;
 import com.shawn.springboot.web.dto.PostsSaveRequestDto;
 import com.shawn.springboot.web.dto.PostsUpdateRequestDto;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //JPA 기능까지 한번에 테스트 할 때는 @SpringBootTest와 TestRestTemplate을 활용한다.
 public class PostsApiControllerTest {
 
@@ -46,7 +46,7 @@ public class PostsApiControllerTest {
 
     private MockMvc mvc;
 
-    @Before //매번 테스트가 시작되기 전에 MockMvc 인스턴스를 생성
+    @BeforeEach //매번 테스트가 시작되기 전에 MockMvc 인스턴스를 생성
     public void setup(){
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
@@ -54,7 +54,7 @@ public class PostsApiControllerTest {
                 .build();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception{
         postsRepository.deleteAll();
     }
