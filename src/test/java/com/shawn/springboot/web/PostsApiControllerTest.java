@@ -75,7 +75,7 @@ public class PostsApiControllerTest {
 
         //when
         mvc.perform(post(url)   //생성된 MockMvc를 통해 API를 테스트
-                .contentType(MediaType.APPLICATION_JSON_UTF8)   //본문 영역은 문자열로 표현하기 위해 ObjectMapper를 통해 문자열 JSON으로 변환
+                .contentType(MediaType.APPLICATION_JSON)   //본문 영역은 문자열로 표현하기 위해 ObjectMapper를 통해 문자열 JSON으로 변환
                 .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 //        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
