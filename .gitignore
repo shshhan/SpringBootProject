@@ -25,3 +25,4 @@ hs_err_pid*
 /.gradle/
 /build/
 application-oauth.properties
+/src/main/resources/application-real-db.properties
